@@ -246,7 +246,7 @@ public class UserActivity {
     int mentorIdLength = LocalDbActivity.kIdLengthFallback;
 
     try {
-      Long.parseLong(userID);
+      // Long.parseLong(userID); Allow for non-numeric IDs due to school id format change
 
       if (Constants.kMentorFallback) {
         return userID.length() == idLength || userID.length() == mentorIdLength;
