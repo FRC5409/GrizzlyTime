@@ -262,9 +262,10 @@ public class AlertUtils {
 
     ToggleGroup genderRadioGroup = new ToggleGroup();
 
-    RadioButton maleRadio = new RadioButton("Male");
+    RadioButton maleRadio = new RadioButton("He/Him");
+    RadioButton femaleRadio = new RadioButton("She/Her");
+    RadioButton theyThemRadio = new RadioButton("They/Them");
     RadioButton otherRadio = new RadioButton("Other");
-    RadioButton femaleRadio = new RadioButton("Female");
 
     otherRadio.fire();
 
@@ -277,11 +278,13 @@ public class AlertUtils {
 
     maleRadio.setToggleGroup(genderRadioGroup);
     femaleRadio.setToggleGroup(genderRadioGroup);
+    theyThemRadio.setToggleGroup(genderRadioGroup);    
     otherRadio.setToggleGroup(genderRadioGroup);
 
     genderPane.add(maleRadio, 0, 0);
     genderPane.add(femaleRadio, 1, 0);
-    genderPane.add(otherRadio, 2, 0);
+    genderPane.add(theyThemRadio,2,0);
+    genderPane.add(otherRadio, 3, 0);
 
     grid.add(new Label("First Name:"), 0, 0);
     grid.add(firstName, 1, 0);
@@ -337,9 +340,11 @@ public class AlertUtils {
       data.add(email.getText());
 
       if (maleRadio.isSelected()) {
-        data.add("MALE");
+        data.add("He/Him");
       } else if (femaleRadio.isSelected()) {
-        data.add("FEMALE");
+        data.add("She/Her");
+      }else if (theyThemRadio.isSelected()) {
+        data.add("They/Them");
       } else {
         data.add("OTHER");
       }
