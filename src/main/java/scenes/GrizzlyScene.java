@@ -173,6 +173,13 @@ public class GrizzlyScene {
   private void confirmLogin() {
     setMessageBoxText("Processing...");
 
+    /* Brooks - 2023/24 Season Changes
+    As of the 2023 school year the school's bar code system has changed to append a an alpa char at the beginning and
+    end of the scanned ID bar code.  To ameliorate this strip and non-alpha chars entered into the text box at 
+    login time.
+    */
+    studentIDBox.setText( studentIDBox.getText().replaceAll("[^0-9.]", ""));
+
     // confirm the ID is vslid
     if (!userActivity.isValidID(studentIDBox.getText())) {
       setMessageBoxText("ID " + studentIDBox.getText() + " is invalid.");
