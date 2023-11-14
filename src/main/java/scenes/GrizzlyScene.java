@@ -77,6 +77,7 @@ public class GrizzlyScene {
 
     // create the upper image
     imageView.setFitHeight(Constants.kCameraHeight);
+    imageView.setFitWidth(Constants.kCameraWidth);
     GridPane.setHalignment(imageView, HPos.CENTER);
     root.add(imageView, 0, 0);
 

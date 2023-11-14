@@ -18,7 +18,8 @@ public class Constants {
   public static final int kEmailColumn = 3;
 
   // camera feed size
-  public static final int kCameraHeight = 400;
+  public static final int kCameraHeight = 300;
+  public static final int kCameraWidth = 500;
 
   // window constants
   public static final boolean kWindowResizable = false;
