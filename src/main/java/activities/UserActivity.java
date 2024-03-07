@@ -142,6 +142,9 @@ public class UserActivity {
 
     int userRow =
         dbUtils.getCellRowFromColumn(userID, Constants.kStudentIdColumn, Constants.kMainSheet);
+    
+    // get user name
+    String userName = dbUtils.getCellData(userRow, Constants.kFirstNameColumn, Constants.kMainSheet);
 
     // log the user in
     if (userRow != -1) {
@@ -149,7 +152,7 @@ public class UserActivity {
 
       Platform.runLater(
           () -> {
-            GrizzlyScene.setMessageBoxText("Successfully logged in user: " + userID);
+            GrizzlyScene.setMessageBoxText("Successfully logged in user: " + userName);
             GrizzlyScene.clearInput();
           });
     }

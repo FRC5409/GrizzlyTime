@@ -104,10 +104,13 @@ public class LogoutActivity {
     dbUtils.setCellData(userRowLogout, userTimeColumn, timeTotalDay, Constants.kLogSheet);
     dbUtils.setCellData(userRow, Constants.kTotalHoursColumn, timeTotal, Constants.kMainSheet);
 
+    // get user name
+    String userName = dbUtils.getCellData(userRow, Constants.kFirstNameColumn, Constants.kMainSheet);
+
     // show user logout text
     Platform.runLater(
         () -> {
-          GrizzlyScene.setMessageBoxText("Logged out user: " + userID);
+          GrizzlyScene.setMessageBoxText("Logged out user: " + userName);
           GrizzlyScene.clearInput();
         });
   }
