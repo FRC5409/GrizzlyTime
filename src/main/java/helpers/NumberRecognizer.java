@@ -80,6 +80,8 @@ public class NumberRecognizer {
    * separated groups on one line are never joined and neither are digits on different lines. What
    * comes back is a single number exactly as it is printed.
    *
+   * <p>Leading zeros are stripped first, so the length is judged on the number itself.
+   *
    * <p>A run of an accepted length wins. Otherwise the longest is returned and flagged, so a near
    * miss can be corrected by hand instead of being silently dropped.
    */
@@ -90,7 +92,7 @@ public class NumberRecognizer {
       String trimmed = line.trim();
 
       if (!trimmed.isEmpty() && kDigitLine.matcher(trimmed).matches()) {
-        candidates.add(trimmed);
+        candidates.add(stripLeadingZeros(trimmed));
       }
     }
 
@@ -115,6 +117,22 @@ public class NumberRecognizer {
     }
 
     return new Result(longest, false);
+  }
+
+  /**
+   * Drops leading zeros, which the card prints as padding but the ID itself does not carry.
+   *
+   * <p>Done before the length is checked so both agree on the same number. At least one digit is
+   * always kept, so a run of nothing but zeros does not come back empty.
+   */
+  private static String stripLeadingZeros(String digits) {
+    int first = 0;
+
+    while (first < digits.length() - 1 && digits.charAt(first) == '0') {
+      first++;
+    }
+
+    return digits.substring(first);
   }
 
   /** Crops to the area the guide box marks out. */
