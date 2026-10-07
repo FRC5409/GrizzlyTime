@@ -44,6 +44,15 @@ public class AlertUtils {
     }
   }
 
+  /** Adds the window icon, skipping it if the image is missing. */
+  private static void addIcon(Stage stage) {
+    Image icon = CommonUtils.loadImage(Constants.kApplicationIcon);
+
+    if (icon != null) {
+      stage.getIcons().add(icon);
+    }
+  }
+
   // confirm new user registration
   public boolean confirmInput(String message) {
     AtomicBoolean tempBoolean = new AtomicBoolean();
@@ -81,20 +90,23 @@ public class AlertUtils {
 
     // Set Custom Icon
     Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-    stage.getIcons().add(new Image(Constants.kApplicationIcon));
+    addIcon(stage);
 
     // Set the button types.
     ButtonType confirmButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(confirmButton, ButtonType.CANCEL);
 
-    Image image = new Image(Constants.kBearImage);
-    ImageView imageView = new ImageView(image);
+    // purely decorative, so the dialog simply goes without when it is absent
+    Image image = CommonUtils.loadImage(Constants.kBearImage);
 
-    imageView.setPreserveRatio(Constants.kBearPreserveRatio);
-    imageView.setFitWidth(Constants.kBearImageWidth);
+    if (image != null) {
+      ImageView imageView = new ImageView(image);
 
-    // Set the icon (must be included in the project).
-    dialog.setGraphic(imageView);
+      imageView.setPreserveRatio(Constants.kBearPreserveRatio);
+      imageView.setFitWidth(Constants.kBearImageWidth);
+
+      dialog.setGraphic(imageView);
+    }
 
     // Create the username and password labels and fields.
     GridPane grid = new GridPane();
@@ -152,7 +164,7 @@ public class AlertUtils {
 
     // Set Custom Icon
     Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-    stage.getIcons().add(new Image(Constants.kApplicationIcon));
+    addIcon(stage);
 
     dialog.getDialogPane().getStylesheets().add(Constants.kRootStylesheet);
     dialog.getDialogPane().getStyleClass().add("accountDialog");
@@ -219,7 +231,7 @@ public class AlertUtils {
 
     // Set Custom Icon
     Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-    stage.getIcons().add(new Image(Constants.kApplicationIcon));
+    addIcon(stage);
 
     dialog.getDialogPane().getStylesheets().add(Constants.kRootStylesheet);
     dialog.getDialogPane().getStyleClass().add("accountDialog");
@@ -278,12 +290,12 @@ public class AlertUtils {
 
     maleRadio.setToggleGroup(genderRadioGroup);
     femaleRadio.setToggleGroup(genderRadioGroup);
-    theyThemRadio.setToggleGroup(genderRadioGroup);    
+    theyThemRadio.setToggleGroup(genderRadioGroup);
     otherRadio.setToggleGroup(genderRadioGroup);
 
     genderPane.add(maleRadio, 0, 0);
     genderPane.add(femaleRadio, 1, 0);
-    genderPane.add(theyThemRadio,2,0);
+    genderPane.add(theyThemRadio, 2, 0);
     genderPane.add(otherRadio, 3, 0);
 
     grid.add(new Label("First Name:"), 0, 0);
@@ -343,7 +355,7 @@ public class AlertUtils {
         data.add("He/Him");
       } else if (femaleRadio.isSelected()) {
         data.add("She/Her");
-      }else if (theyThemRadio.isSelected()) {
+      } else if (theyThemRadio.isSelected()) {
         data.add("They/Them");
       } else {
         data.add("OTHER");
