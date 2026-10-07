@@ -34,6 +34,19 @@ dependencies {
     implementation group: 'com.google.apis', name: 'google-api-services-sheets', version: 'v4-rev581-1.25.0'
     implementation 'org.json:json:20180813'
 
+    // webcam capture and OCR, a fallback for the USB barcode scanner
+    implementation group: 'com.github.sarxos', name: 'webcam-capture', version: '0.3.12'
+
+    // tess4j pulls in PDFBox and JUnit for features this project does not use
+    implementation('net.sourceforge.tess4j:tess4j:5.11.0') {
+        exclude group: 'org.apache.pdfbox'
+        exclude group: 'org.junit.jupiter'
+        exclude group: 'org.junit.platform'
+        exclude group: 'info.picocli'
+        exclude group: 'org.jboss'
+        exclude group: 'org.jboss.logging'
+    }
+
     if (javaVer == 11){
         implementation "org.openjfx:javafx:11.0.1"
     } else if (javaVer == 17) {

@@ -4,6 +4,7 @@ import databases.BatchUpdateData;
 import databases.DatabaseUtils;
 import exceptions.CancelledUserCreationException;
 import helpers.AlertUtils;
+import helpers.CommonUtils;
 import helpers.Constants;
 import helpers.LoggingUtils;
 import java.time.LocalDateTime;
@@ -242,22 +243,17 @@ public class UserActivity {
 
   // checks if ID is valid long and x digit number (x based on config file)
   public boolean isValidID(String userID) {
-    int idLength = LocalDbActivity.kIdLength;
-    int mentorIdLength = LocalDbActivity.kIdLengthFallback;
-
-    try {
-      Long.parseLong(userID);
-
-      if (Constants.kMentorFallback) {
-        return userID.length() == idLength || userID.length() == mentorIdLength;
-
-      } else {
-        return userID.length() == idLength;
-      }
-
-    } catch (NumberFormatException e) {
-      // not a valid ID
+    if (userID == null || userID.isEmpty()) {
       return false;
     }
+
+    // a long card number overflows a long, so check the digits directly
+    for (char character : userID.toCharArray()) {
+      if (character < '0' || character > '9') {
+        return false;
+      }
+    }
+
+    return CommonUtils.isAcceptedIdLength(userID.length());
   }
 }

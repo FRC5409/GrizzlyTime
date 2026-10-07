@@ -1,5 +1,6 @@
 package helpers;
 
+import activities.LocalDbActivity;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -43,6 +44,23 @@ public class CommonUtils {
       LoggingUtils.log(Level.WARNING, "Unable to load image: " + resource);
       return null;
     }
+  }
+
+  /**
+   * Whether a numeric ID of this length is accepted. Covers the short school ID, the mentor
+   * fallback, and the long number printed on cards that carry a full length barcode. Kept here so
+   * typing an ID, and reading one off a card, agree on what is valid.
+   */
+  public static boolean isAcceptedIdLength(int length) {
+    if (length == LocalDbActivity.kIdLength) {
+      return true;
+    }
+
+    if (Constants.kMentorFallback && length == LocalDbActivity.kIdLengthFallback) {
+      return true;
+    }
+
+    return length >= Constants.kLongIdMinLength && length <= Constants.kLongIdMaxLength;
   }
 
   public static String readFile(String filePath) throws FileNotFoundException {
